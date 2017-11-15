@@ -21,9 +21,16 @@ public class Player : MonoBehaviour {
 	public GameObject diedMenu;
 	public static float dist;
 
+	AudioSource audioSource;
+	public GameObject trail;
+	public GameObject bubbles;
+
 	void Start ()
 	{
 		rb = GetComponent<Rigidbody2D> ();
+		audioSource = GetComponent<AudioSource> ();
+		trail.SetActive (false);
+		bubbles.SetActive (true);
 		transform.position = startPos.position;
 		playing = false;
 		dist = 0;
@@ -58,9 +65,11 @@ public class Player : MonoBehaviour {
 		}
 	}
 
-	public void StartClicked()
+	public void StartFish()
 	{
 		playing = true;
+		trail.SetActive (true);
+		bubbles.SetActive (false);
 		clickMenu.SetActive (false);
 	}
 
@@ -77,12 +86,15 @@ public class Player : MonoBehaviour {
 	{
 		playing = false;
 		rb.velocity = Vector2.zero;
+		audioSource.Play ();
+		trail.SetActive (false);
+		bubbles.SetActive (true);
 
 		yield return new WaitForSeconds (1f);
 		diedMenu.SetActive (true);
 	}
 
-	public void StartMenu()
+	public void PlayAgain()
 	{
 		diedMenu.SetActive (false);
 		transform.position = startPos.position;
