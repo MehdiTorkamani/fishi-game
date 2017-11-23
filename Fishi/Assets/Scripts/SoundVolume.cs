@@ -24,9 +24,15 @@ public class SoundVolume : MonoBehaviour {
 
 	public void ChangeVolume(float volFloat)
 	{
+		if (volFloat == -30)
+		{
+			vol = -80;
+		}
+		else
 		vol = volFloat;
+
 		if(volumeOn)
-		audioMixer.SetFloat ("mainVolume", volFloat);
+		audioMixer.SetFloat ("mainVolume", vol);
 	}
 
 	public void TurnOffOn(bool turnOn)
